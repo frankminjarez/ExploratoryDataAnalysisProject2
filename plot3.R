@@ -16,25 +16,25 @@ NEI <- readRDS("summarySCC_PM25.rds")
 SCC <- readRDS("Source_Classification_Code.rds")
 
 ## Subset of Baltimore City Data
-bc <- subset(NEI,fips==24510)
+bc <- subset(NEI, fips==24510)
 
 ## Group by year and type, sum Emissions
-bcByTypeAndYear<-ddply(bc,.(year, type),summarize,total=sum(Emissions))
+bcByTypeAndYear <- ddply(bc, .(year, type), summarize, total = sum(Emissions))
 
 png("plot3.png")
-g <- ggplot(bcByTypeAndYear, aes(x=as.factor(year), y=total, fill=type)) + 
+g <- ggplot(bcByTypeAndYear, aes(x = as.factor(year), y = total, fill = type)) + 
         labs(x = "Year") + 
-        labs(y="Total PM25 (Tons)") +
-        labs(title="Emissions by Type for Baltimore City") +
-        geom_bar(stat="Identity",position="dodge")
+        labs(y = "Total PM2.5 (Tons)") +
+        labs(title = "Emissions by Type for Baltimore City") +
+        geom_bar(stat = "Identity", position = "dodge")
 print(g)
 dev.off()
 
 png("plot3_1.png")
 g <- ggplot(bcByTypeAndYear, aes(year, total, color = type)) + 
         geom_line(size = 1.5) +
-        labs(title="Emissions by Type for Baltimore City") +
+        labs(title = "Emissions by Type for Baltimore City") +
         xlab("Year") +
-        ylab("Total PM25 Emissions (Tons)")
+        ylab("Total PM2.5 Emissions (Tons)")
 print(g)
 dev.off()

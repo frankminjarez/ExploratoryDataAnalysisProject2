@@ -18,16 +18,22 @@ library(ggplot2)
 ## Merge classification and summary data
 NS <- merge(x = NEI, y = SCC, by = "SCC", all.x = TRUE)
 
-NSBc <- subset(NS,fips %in% c("24510", "06037"))
-NSBc <- subset(NSBc,grepl("Mobile*", SCC.Level.One))
-NSBc <- subset(NSBc,grepl("*Vehicle*", SCC.Level.Two))
-vehicleByYear<-ddply(NSBc,.(year,fips),summarize,total=sum(Emissions))
+## Subset Baltimore and LA
+BcLa <- subset(NS,fips %in% c("24510", "06037"))
+
+## Subset all vehicles
+BcLa <- subset(BcLa,grepl("Mobile*", SCC.Level.One))
+BcLa <- subset(BcLa,grepl("*Vehicle*", SCC.Level.Two))
+
+## Summarize by year and location
+vehicleByYear <- ddply(BcLa, .(year,fips), summarize, total=sum(Emissions))
 vehicleByYear$city <- ifelse(vehicleByYear$fips == "24510", "Baltimore", "Los Angeles")
+
 png("plot6.png")                                                    
 g <- ggplot(vehicleByYear, aes(x=as.factor(year), y=total, fill=city)) + 
         labs(x = "Year") + 
-        labs(y="Vehicle Comb. Total PM25") +
-        labs(title="Baltimore Vs. Los Angeles Vehicle Emissions") +
-        geom_bar(stat="Identity", position="dodge")
+        labs(y = "Vehicle Comb. Total PM25") +
+        labs(title = "Baltimore Vs. Los Angeles Vehicle Emissions") +
+        geom_bar(stat = "Identity", position = "dodge")
 print(g)
 dev.off()

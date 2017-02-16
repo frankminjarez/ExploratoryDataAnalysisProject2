@@ -18,14 +18,14 @@ SCC <- readRDS("Source_Classification_Code.rds")
 ## Merge classification and summary data
 NS <- merge(x = NEI, y = SCC, by = "SCC", all.x = TRUE)
 
-NSCoal <- subset(NS, grepl(glob2rx("*Comb*Coal*") , Short.Name))
-NSCoalSummary<-ddply(NSCoal,.(year),summarize,total=sum(Emissions))
+NSCoal <- subset(NS, grepl(glob2rx("*Comb*Coal*"), Short.Name))
+NSCoalSummary <- ddply(NSCoal, .(year), summarize, total=sum(Emissions))
 
 png("plot4.png")
-g <- ggplot(NSCoalSummary, aes(x=as.factor(year), y=total)) + 
+g <- ggplot(NSCoalSummary, aes(x = as.factor(year), y = total)) + 
         labs(x = "Year") + 
-        labs(y="Coal Comb. Total PM25 (Tons)") +
-        labs(title="US Coal Emissions") +
-        geom_bar(stat="Identity")
+        labs(y = "Coal Comb. Total PM25 (Tons)") +
+        labs(title = "US Coal Emissions") +
+        geom_bar(stat = "Identity")
 print(g)
 dev.off()
