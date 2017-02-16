@@ -1,4 +1,15 @@
+url <- "https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2FNEI_data.zip"
+
+if(!file.exists("emissions.zip")) {
+        download.file(url, "emissions.zip")
+}
+
+if(!file.exists("summarySCC_PM25.rds")) {
+        unzip("emissions.zip")
+}
+
 library(plyr)
+library(ggplot2)
 
 ## This first line will likely take a few seconds. Be patient!
 NEI <- readRDS("summarySCC_PM25.rds")
