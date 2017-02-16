@@ -33,7 +33,8 @@ dev.off()
 png("plot3_1.png")
 g <- ggplot(bcByTypeAndYear, aes(year, total, color = type)) + 
         geom_line(size = 1.5) +
-        xlab("year") +
-        ylab("Total emissions")
+        labs(title="Emissions by Type for Baltimore City") +
+        xlab("Year") +
+        ylab("Total PM25 Emissions (Tons)")
 print(g)
 dev.off()
