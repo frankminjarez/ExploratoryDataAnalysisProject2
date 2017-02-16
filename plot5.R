@@ -24,10 +24,10 @@ NSBc <- subset(NSBc,grepl("*Vehicle*", SCC.Level.Two))
 VehicleByYear<-ddply(NSBc,.(year),summarize,total=sum(Emissions))
 
 png("plot5.png")                                                    
-ggplot(VehicleByYear, aes(x=as.factor(year), y=total)) + 
+g <- ggplot(VehicleByYear, aes(x=as.factor(year), y=total)) + 
         labs(x = "Year") + 
         labs(y="Vehicle Comb. Total PM25") +
         labs(title="Baltimore City Vehicle Emissions") +
         geom_bar(stat="Identity")
-
+print(g)
 dev.off()

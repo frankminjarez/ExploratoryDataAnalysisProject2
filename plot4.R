@@ -22,9 +22,10 @@ NSCoal <- subset(NS, grepl(glob2rx("*Comb*Coal*") , Short.Name))
 NSCoalSummary<-ddply(NSCoal,.(year),summarize,total=sum(Emissions))
 
 png("plot4.png")
-ggplot(NSCoalSummary, aes(x=as.factor(year), y=total)) + 
+g <- ggplot(NSCoalSummary, aes(x=as.factor(year), y=total)) + 
         labs(x = "Year") + 
         labs(y="Coal Comb. Total PM25 (Tons)") +
         labs(title="US Coal Emissions") +
         geom_bar(stat="Identity")
+print(g)
 dev.off()

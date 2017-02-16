@@ -24,9 +24,10 @@ NSBc <- subset(NSBc,grepl("*Vehicle*", SCC.Level.Two))
 vehicleByYear<-ddply(NSBc,.(year,fips),summarize,total=sum(Emissions))
 vehicleByYear$city <- ifelse(vehicleByYear$fips == "24510", "Baltimore", "Los Angeles")
 png("plot6.png")                                                    
-ggplot(vehicleByYear, aes(x=as.factor(year), y=total, fill=city)) + 
+g <- ggplot(vehicleByYear, aes(x=as.factor(year), y=total, fill=city)) + 
         labs(x = "Year") + 
         labs(y="Vehicle Comb. Total PM25") +
         labs(title="Baltimore Vs. Los Angeles Vehicle Emissions") +
         geom_bar(stat="Identity", position="dodge")
+print(g)
 dev.off()
