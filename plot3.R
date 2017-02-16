@@ -22,10 +22,18 @@ bc <- subset(NEI,fips==24510)
 bcByTypeAndYear<-ddply(bc,.(year, type),summarize,total=sum(Emissions))
 
 png("plot3.png")
-g <- ggplot(bcByTypeAndYear, aes(x=year, y=total, fill=type)) + 
+g <- ggplot(bcByTypeAndYear, aes(x=as.factor(year), y=total, fill=type)) + 
         labs(x = "Year") + 
         labs(y="Total PM25 (Tons)") +
         labs(title="Emissions by Type for Baltimore City") +
         geom_bar(stat="Identity",position="dodge")
+print(g)
+dev.off()
+
+png("plot3_1.png")
+g <- ggplot(bcByTypeAndYear, aes(year, total, color = type)) + 
+        geom_line(size = 1.5) +
+        xlab("year") +
+        ylab("Total emissions")
 print(g)
 dev.off()
